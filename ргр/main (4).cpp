@@ -1,0 +1,183 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+
+using namespace std;
+
+void task1();
+string Dec_To_Bin(int);
+
+void task2();
+void Dec_To_Six(int);
+
+void task3();
+void DecTo_N_(int);
+
+void task4();
+
+
+int main() {
+
+
+	int choice = 0;
+
+	while (choice != 5) {
+
+		cout << "Choose task: "
+			"\n1.Task1"
+			"\n2.Task2"
+			"\n3.Task3"
+			"\n4.Task4"
+			"\n5.Exit" << endl;
+
+		cin >> choice;
+
+		switch (choice) {
+		case 1: {
+			task1();		// Task of converting the number 144 from decimal to binary and hexadecimal
+			break;
+		}
+		case 2: {
+			task2();		// The task of converting the number 2160 from decimal to hexadecimal and binary
+			break;
+		}
+		case 3: {
+			task3();		// Conversion task from decimal to thirteen
+			break;
+		}
+		case 4: {
+			task4();		// Divide two numbers 144 and 2160 in binary
+			break;
+		}
+		case 5: {
+			cout << "Program is over!";
+			break;
+		}
+		default: {
+			cout << "Wrong one, try again";
+		}
+		}
+	}
+}
+
+void task1() {
+	int number = 144;
+
+	cout << "In decimal = " << number << " to binary = " << Dec_To_Bin(number) << endl;
+	cout << "In decimal = " << number << " to hexadecimal = "; Dec_To_Six(number);
+
+	cout << "\n";
+}
+
+string Dec_To_Bin(int n) {
+	string binary;
+
+	while (n > 0) {
+
+		binary.push_back('0' + n % 2);
+		n /= 2;
+	}
+
+	reverse(binary.begin(), binary.end());
+
+	return binary;
+}
+
+void task2() {
+	int number = 2160;
+
+	cout << "In decimal =  " << number << " to binary = " << Dec_To_Bin(number) << endl;
+	cout << "In decimal =  " << number << " to hexadecimal = "; Dec_To_Six(number);
+
+	cout << "\n";
+}
+void Dec_To_Six(int n) {
+	string binary;
+
+	while (n > 0) {
+
+		if (n % 16 < 10) {
+			binary.push_back('0' + n % 16);
+			n /= 16;
+		}
+		else if (n % 16 == 10) {
+			binary.push_back('A' + n % 16 - 10);
+			n /= 16;
+
+		}
+		else if (n % 16 == 11) {
+			binary.push_back('B' + n % 16 - 11);
+			n /= 16;
+		}
+		else if (n % 16 == 12) {
+			binary.push_back('C' + n % 16 - 12);
+			n /= 16;
+		}
+		else if (n % 16 == 13) {
+			binary.push_back('D' + n % 16 - 13);
+			n /= 16;
+		}
+		else if (n % 16 == 14) {
+			binary.push_back('E' + n % 16 - 14);
+			n /= 16;
+		}
+		else if (n % 16 == 15) {
+			binary.push_back('F' + n % 16 - 15);
+			n /= 16;
+		}
+
+	}
+
+	reverse(binary.begin(), binary.end());
+
+	cout << binary;
+}
+
+void task3() {
+	int in;
+	cout << "Enter a number: ";
+	cin >> in;
+	cout << "Changed number into binary: ";
+
+	DecTo_N_(in);
+
+	cout << endl;
+}
+
+void DecTo_N_(int n) {
+	string binary;
+
+	while (n > 0) {
+
+		if (n % 13 < 10) {
+			binary.push_back('0' + n % 13);
+			n /= 13;
+		}
+		else if (n % 13 == 10) {
+			binary.push_back('K' + n % 13 - 10);
+			n /= 13;
+
+		}
+		else if (n % 13 == 11) {
+			binary.push_back('L' + n % 13 - 11);
+			n /= 13;
+		}
+		else if (n % 13 == 12) {
+			binary.push_back('M' + n % 13 - 12);
+			n /= 13;
+		}
+
+	}
+
+	reverse(binary.begin(), binary.end());
+
+	cout << binary;
+}
+
+void task4() {
+	int number1 = 2160;
+	int number2 = 144;
+	
+	cout << "Divide of numbers: " << number1 << " and " << number2 << " to binary system is " << Dec_To_Bin(2160/144) << std::endl;
+
+}
