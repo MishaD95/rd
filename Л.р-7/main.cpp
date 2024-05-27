@@ -1,0 +1,155 @@
+#include <iostream>
+#define M 20 
+#define N 20
+
+using namespace std;
+
+void matrix40();
+void expandSize(const int rows, const int columns, int**& arr);
+void enterNums(int**&, const int, const int);
+void findPaires(int**, const int, const int);
+void printm(int rows, int cols, int** a);
+
+
+void matrix50();
+void deleteRow(int**& arr, int& rows, int& cols, const int temp);
+void findNums(int**&, const int, const int);
+
+int main() {
+	int choice = 0;
+
+	while (choice != 3) {
+
+		cout << "Choose the task: "
+			"\n1.Matrix#40"
+			"\n2.Matrix#50"
+			"\n3.Exit" << endl;
+
+		cin >> choice;
+
+		switch (choice) {
+		case 1: {
+			matrix40();
+			break;
+		}
+		case 2: {
+			matrix50();
+			break;
+		}
+		case 3: {
+			cout << "Program is over!";
+			break;
+		}
+		default: {
+			cout << "Wrong one, try again!";
+		}
+		}
+	}
+}
+
+void matrix40() { /* MATRIX #40*/
+	int rows, columns;
+
+	int** arr;
+
+	cout << "Enter rows: ";
+	cin >> rows;
+
+	cout << "Enter a columns: ";
+	cin >> columns;
+
+
+	expandSize(rows, columns, arr);
+	enterNums(arr, rows, columns);
+	printm(rows, columns, arr);
+
+	findPaires(arr, rows, columns);
+}
+
+void expandSize(const int rows, const int columns, int**& arr) {
+	arr = new int* [rows];
+	for (int i = 0; i < rows; i++) {
+		arr[i] = new int[columns];
+	}
+}
+
+void enterNums(int**& arr, const int rows, const int columns) {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			cout << "Enter num for arr[" << i << "][" << j << "]: ";
+			cin >> arr[i][j];
+		}
+	}
+}
+
+void printm(int rows, int cols, int** a)
+{
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++)
+			std::cout << a[i][j] << " ";
+		std::cout << std::endl;
+	}
+}
+
+void findPaires(int** arr, const int rows, const int columns) {
+	int count = 0, temp = 0, index = 0;
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			for (int k = j+1; k < columns; k++) {
+				if (arr[i][j] == arr[i][k]) {
+					count++;
+					cout << "\nCount is " << count;
+				}
+			}
+			if (count >= temp) {
+				index = i;
+				temp = count;
+			}
+			count = 0;
+		}
+	}
+	cout << "\nINDEX = " << index;
+}
+
+
+void matrix50() { /*Matrix50*/
+	int** arr;
+	int rows, cols;
+
+	cout << "Enter rows: ";
+	cin >> rows;
+	cout << "Enter columns: ";
+	cin >> cols;
+
+	expandSize(rows, cols, arr);
+	enterNums(arr, rows, cols);
+	printm(rows, cols, arr);
+
+	findNums(arr, rows, cols);
+
+	cout << "Array edited\n\n";
+
+	printm(rows, cols, arr);
+
+}
+
+void findNums(int**& arr, const int rows, const int cols) {
+
+	for (int i = 0; i < rows; i++) {
+		int MAX = 3E+5;
+		int MIN = 0;
+		int MAXtemp = 0;
+		int MINtemp = 0;
+		for (int j = 0; j < cols; j++) {
+			if (arr[i][j] < MAX) {
+				MAX = arr[i][j];
+				MAXtemp = j;
+			}
+			if (arr[i][j] > MIN) {
+				MIN = arr[i][j];
+				MINtemp = j;
+			}
+		}
+		swap(arr[i][MAXtemp], arr[i][MINtemp]);
+	}
+}
