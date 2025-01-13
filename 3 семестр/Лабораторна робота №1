@@ -1,0 +1,67 @@
+import math  # підключення бібліотеки
+
+def swap_hundreds_and_tens(number):
+  # Перевіряємо, чи число тризначне
+  if 100 <= number <= 999:
+      # Отримуємо сотні, десятки та одиниці
+      hundreds = number // 100
+      tens = (number // 10) % 10
+      units = number % 10
+
+      # Формуємо нове число зі зміненими сотнями і десятками
+      new_number = tens * 100 + hundreds * 10 + units
+      return new_number
+  else:
+      return "Помилка: число має бути тризначним"
+
+# Приклад використання
+try:
+  # Замість input використовуємо заздалегідь визначене число для тестування
+  number = 123  # Можете змінити це значення для перевірки інших випадків
+  result = swap_hundreds_and_tens(number)
+  print("Результат:", result)
+except Exception as e:
+  print("Сталася помилка:", e)
+
+
+import math
+
+def calculate_y(x):
+    # Обчислення чисельника
+    numerator = math.log(2 * x**2 + math.cos(math.radians(37)))**3
+
+    # Обчислення знаменника
+    sin_cubed = math.sin(x**2)**3
+    sqrt_term = math.sqrt(abs(4 - 2 * math.cos(x) - math.sin(x**2)**2))
+    denominator = sin_cubed + sqrt_term
+
+    # Перевірка знаменника на 0
+    if denominator == 0:
+        return "Помилка: знаменник дорівнює 0, неможливо обчислити"
+
+    # Обчислення y
+    y = numerator / denominator
+    return y
+
+# Приклад використання
+x = 1  # Введіть значення x
+result = calculate_y(x)
+print(f"Результат для x = {x}: y = {result}")
+
+
+def has_real_roots(a, b, c):
+  # Перевірка, чи рівняння має дійсні корені
+  if a == 0:
+      return "Помилка: коефіцієнт A не може дорівнювати 0"
+
+  discriminant = b**2 - 4*a*c
+  return discriminant >= 0
+
+# Приклад використання
+try:
+  # Замість input використовуємо заздалегідь визначені значення для тестування
+  a, b, c = 1, 2, 1  # Задайте значення коефіцієнтів
+  result = has_real_roots(a, b, c)
+  print("Рівняння має дійсні корені:" if result else "Рівняння не має дійсних коренів")
+except Exception as e:
+  print("Сталася помилка:", e)
