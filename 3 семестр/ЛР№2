@@ -1,0 +1,79 @@
+import math  # підключення бібліотеки
+
+import math
+
+def TriangleP(a, h):
+    """
+    Обчислює периметр рівнобедреного трикутника за його основою a і висотою h.
+    """
+    # Знаходимо бічну сторону b за теоремою Піфагора
+    b = math.sqrt((a / 2) ** 2 + h ** 2)
+
+    # Обчислюємо периметр
+    perimeter = a + 2 * b
+    return perimeter
+
+# Приклад використання
+def main():
+    triangles = [
+        (6, 4),  # Перший трикутник: a = 6, h = 4
+        (8, 5),  # Другий трикутник: a = 8, h = 5
+        (10, 6)  # Третій трикутник: a = 10, h = 6
+    ]
+
+    for i, (a, h) in enumerate(triangles, start=1):
+        perimeter = TriangleP(a, h)
+        print(f"Периметр трикутника {i}: a = {a}, h = {h} -> P = {perimeter:.2f}")
+
+if __name__ == "__main__":
+    main()
+
+# Створюємо файл matrix.txt
+with open("matrix.txt", "w") as f:
+    f.write("2 3 4\n1 5 6\n7 8 9\n")  
+
+
+
+import numpy as np
+
+def process_matrix(file_path):
+    """
+    Обробляє матрицю з файлу:
+    1. Визначає кількість елементів, менших за середнє арифметичне рядка.
+    2. Знаходить обернену матрицю.
+    """
+    try:
+        # Читання матриці з файлу
+        matrix = np.loadtxt(file_path, delimiter=' ')
+        print("Матриця з файлу:")
+        print(matrix)
+
+        # Кількість елементів у рядках, менших за середнє арифметичне
+        for i, row in enumerate(matrix):
+            mean_value = np.mean(row)
+            count_less_than_mean = np.sum(row < mean_value)
+            print(f"Рядок {i + 1}: середнє = {mean_value:.2f}, кількість елементів < середнього = {count_less_than_mean}")
+
+        # Перевірка на квадратність матриці
+        if matrix.shape[0] != matrix.shape[1]:
+            print("\nОбернену матрицю знайти неможливо, оскільки матриця не квадратна.")
+            return
+
+        determinant = np.linalg.det(matrix)
+        if determinant == 0:
+            print("\nОбернену матрицю знайти неможливо, оскільки визначник дорівнює 0.")
+            return
+
+        # Обчислення оберненої матриці
+        inverse_matrix = np.linalg.inv(matrix)
+
+        print("\nОбернена матриця:")
+        print(inverse_matrix)
+
+    except Exception as e:
+        print(f"Сталася помилка: {e}")
+
+# Виклик функції
+if __name__ == "__main__":
+    file_path = "matrix.txt"
+    process_matrix(file_path)
