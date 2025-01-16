@@ -1,67 +1,113 @@
-import math  # підключення бібліотеки
+def rearrange_digits(number):
+    """
+    Переставляє цифри сотень і десятків у тризначному числі.
+    :param number: Тризначне число
+    :return: Число після перестановки
+    """
+    if 100 <= number <= 999:
+        hundreds = number // 100
+        tens = (number // 10) % 10
+        units = number % 10
+        rearranged = tens * 100 + hundreds * 10 + units
+        return rearranged
+    else:
+        raise ValueError("Число повинно бути тризначним.")
 
-def swap_hundreds_and_tens(number):
-  # Перевіряємо, чи число тризначне
-  if 100 <= number <= 999:
-      # Отримуємо сотні, десятки та одиниці
-      hundreds = number // 100
-      tens = (number // 10) % 10
-      units = number % 10
-
-      # Формуємо нове число зі зміненими сотнями і десятками
-      new_number = tens * 100 + hundreds * 10 + units
-      return new_number
-  else:
-      return "Помилка: число має бути тризначним"
-
-# Приклад використання
-try:
-  # Замість input використовуємо заздалегідь визначене число для тестування
-  number = 123  # Можете змінити це значення для перевірки інших випадків
-  result = swap_hundreds_and_tens(number)
-  print("Результат:", result)
-except Exception as e:
-  print("Сталася помилка:", e)
+def task1():
+    """
+    Введення тризначного числа і обчислення результату.
+    """
+    try:
+        number = int(input("Введіть тризначне число: "))
+        result = rearrange_digits(number)
+        print(f"Число після перестановки цифр: {result}")
+    except ValueError as e:
+        print(f"Помилка: {e}")
 
 
 import math
 
-def calculate_y(x):
-    # Обчислення чисельника
-    numerator = math.log(2 * x**2 + math.cos(math.radians(37)))**3
+def calculate_expression(x):
+    """
+    Обчислює значення математичного виразу:
+    y = log^3(2x^2 + cos(37)) / (sin^3(x^2) + sqrt|4 - 2cos(x) - sin^2(x^2)|)
+    :param x: Значення змінної x
+    :return: Значення виразу
+    """
+    try:
+        numerator = math.log(2 * x**2 + math.cos(math.radians(37)))**3
+        sin_part = math.sin(x**2)**3
+        sqrt_part = math.sqrt(abs(4 - 2 * math.cos(x) - math.sin(x**2)**2))
+        denominator = sin_part + sqrt_part
+        if denominator == 0:
+            raise ZeroDivisionError("Знаменник дорівнює нулю.")
+        y = numerator / denominator
+        return y
+    except ValueError as e:
+        raise ValueError(f"Помилка у вхідних даних: {e}")
 
-    # Обчислення знаменника
-    sin_cubed = math.sin(x**2)**3
-    sqrt_term = math.sqrt(abs(4 - 2 * math.cos(x) - math.sin(x**2)**2))
-    denominator = sin_cubed + sqrt_term
-
-    # Перевірка знаменника на 0
-    if denominator == 0:
-        return "Помилка: знаменник дорівнює 0, неможливо обчислити"
-
-    # Обчислення y
-    y = numerator / denominator
-    return y
-
-# Приклад використання
-x = 1  # Введіть значення x
-result = calculate_y(x)
-print(f"Результат для x = {x}: y = {result}")
+def task2():
+    """
+    Введення змінної x і обчислення значення виразу.
+    """
+    try:
+        x = float(input("Введіть x: "))
+        result = calculate_expression(x)
+        print(f"Результат обчислення: {result}")
+    except (ValueError, ZeroDivisionError) as e:
+        print(f"Помилка: {e}")
 
 
-def has_real_roots(a, b, c):
-  # Перевірка, чи рівняння має дійсні корені
-  if a == 0:
-      return "Помилка: коефіцієнт A не може дорівнювати 0"
+def check_discriminant(a, b, c):
+    """
+    Перевіряє, чи має квадратне рівняння дійсні корені.
+    :param a: Коефіцієнт при x^2 (a != 0)
+    :param b: Коефіцієнт при x
+    :param c: Вільний член
+    :return: True, якщо є дійсні корені, інакше False
+    """
+    if a == 0:
+        raise ValueError("Коефіцієнт a не може дорівнювати нулю.")
+    discriminant = b**2 - 4 * a * c
+    return discriminant >= 0
 
-  discriminant = b**2 - 4*a*c
-  return discriminant >= 0
+def task3():
+    """
+    Введення коефіцієнтів квадратного рівняння і перевірка дискримінанта.
+    """
+    try:
+        a = float(input("Введіть a: "))
+        b = float(input("Введіть b: "))
+        c = float(input("Введіть c: "))
+        result = check_discriminant(a, b, c)
+        print(f"Квадратне рівняння має дійсні корені: {result}")
+    except ValueError as e:
+        print(f"Помилка: {e}")
 
-# Приклад використання
-try:
-  # Замість input використовуємо заздалегідь визначені значення для тестування
-  a, b, c = 1, 2, 1  # Задайте значення коефіцієнтів
-  result = has_real_roots(a, b, c)
-  print("Рівняння має дійсні корені:" if result else "Рівняння не має дійсних коренів")
-except Exception as e:
-  print("Сталася помилка:", e)
+
+def main_menu():
+    """
+    Меню для вибору задач.
+    """
+    while True:
+        print("\nВиберіть задачу:")
+        print("1. Перестановка цифр у тризначному числі")
+        print("2. Обчислення математичного виразу")
+        print("3. Перевірка дискримінанта")
+        print("4. Вийти")
+        choice = input("Ваш вибір: ")
+
+        if choice == "1":
+            task1()
+        elif choice == "2":
+            task2()
+        elif choice == "3":
+            task3()
+        elif choice == "4":
+            print("Вихід...")
+            break
+        else:
+            print("Невірний вибір. Спробуйте ще раз.")
+
+if __name__ == "__main__":
+    main_menu()
