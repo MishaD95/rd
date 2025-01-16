@@ -1,30 +1,13 @@
-# main.py
-from functions import power_a3_for_list, process_matrix
+from lab3 import task1, task2 
 
-def task1():
-    """Задача 1: обчислення кубів чисел зі списку."""
-    try:
-        in_num = int(input("Введіть кількість елементів: "))
-        in_data = [int(input(f"{i+1}-й елемент: ")) for i in range(in_num)]
-        print("Числа, піднесені до куба:", power_a3_for_list(in_data))
-    except ValueError:
-        print("Помилка: введіть правильне ціле число.")
-
-def task2():
-    """Задача 2: обробка матриці."""
-    filename = input("Введіть назву файлу з матрицею: ")
-    sum_k, prod_k, changed_matrix = process_matrix(filename)
-    if sum_k is not None:
-        print(f"Сума K-го рядка: {sum_k}")
-        print(f"Добуток K-го рядка: {prod_k}")
-        print(f"Змінена матриця:\n{changed_matrix}")
-
-def main():
-    """Головний цикл вибору задач."""
+def main_menu():
+    """
+    Меню для вибору задач.
+    """
     while True:
         print("\nВиберіть задачу:")
-        print("1. Піднести числа до куба")
-        print("2. Обробити матрицю")
+        print("1. Обчислення периметра трикутників")
+        print("2. Обробка матриці")
         print("3. Вийти")
         choice = input("Ваш вибір: ")
 
@@ -39,4 +22,4 @@ def main():
             print("Невірний вибір. Спробуйте ще раз.")
 
 if __name__ == "__main__":
-    main()
+    main_menu()
