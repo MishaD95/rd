@@ -1,42 +1,92 @@
-# functions.py
-import numpy as np
+def sum_of_two_largest(a, b, c):
+    """
+    Знаходить суму двох найбільших чисел із трьох.
+    :param a: Перше число
+    :param b: Друге число
+    :param c: Третє число
+    :return: Сума двох найбільших чисел
+    """
+    return a + b + c - min(a, b, c)
+
+def task1():
+    """
+    Введення трьох чисел і обчислення суми двох найбільших.
+    """
+    try:
+        a = float(input("Введіть перше число: "))
+        b = float(input("Введіть друге число: "))
+        c = float(input("Введіть третє число: "))
+        result = sum_of_two_largest(a, b, c)
+        print(f"Сума двох найбільших чисел: {result}")
+    except ValueError:
+        print("Помилка: введіть коректні числа.")
+
+
 import math
 
-
-def power_a3(a):
-    """Піднесення числа до куба"""
-    return a ** 3
-
-
-def power_a3_for_list(list_of_a):
-    """Піднесення всіх чисел зі списку до куба"""
-    return [power_a3(a) for a in list_of_a]
-
-
-def process_matrix(filename):
+def count_points_in_area(points, radius):
     """
-    Зчитування матриці з файлу, підрахунок параметрів і виконання операцій над матрицею.
-    Повертає суму K-го рядка, добуток K-го рядка і змінену матрицю.
+    Рахує кількість точок, які потрапляють у задану область (31 варіант).
+    :param points: Список точок [(x1, y1), (x2, y2), ...]
+    :param radius: Радіус кола
+    :return: Кількість точок у заданій області
     """
-    M = N = K = 0
+    count = 0
+    for x, y in points:
+        # Умови для попадання точки в жовту область (31 варіант)
+        if x >= 0 and y >= 0 and (x**2 + y**2) <= radius**2:
+            count += 1
+    return count
+
+def task2():
+    """
+    Введення координат точок і радіуса, перевірка попадання точок у задану область.
+    """
     try:
-        with open(filename, 'r') as f:
-            # Зчитуємо параметри
-            param_line = f.readline().split()
-            M, N, K = map(int, param_line)
+        n = int(input("Введіть кількість точок: "))
+        radius = float(input("Введіть радіус кола: "))
+        points = []
+        for i in range(n):
+            x, y = map(float, input(f"Введіть координати точки {i+1} (x y): ").split())
+            points.append((x, y))
+        result = count_points_in_area(points, radius)
+        print(f"Кількість точок у жовтій області: {result}")
+    except ValueError:
+        print("Помилка: введіть коректні значення.")
 
-            if K < 1 or K > M:
-                raise ValueError("Номер рядка K повинен бути в діапазоні від 1 до M.")
 
-            # Зчитуємо матрицю
-            matrix = np.loadtxt(filename, skiprows=1, max_rows=M)
-    except Exception as e:
-        print(f"Помилка при зчитуванні файлу: {e}")
-        return None, None, None
+import math
 
-    # Обчислення
-    sum_k = np.sum(matrix[K - 1, :])
-    prod_k = np.prod(matrix[K - 1, :])
-    changed_matrix = matrix - np.ones((M, N))
+def series_sum(x, epsilon, g):
+    """
+    Обчислює суму ряду ∑ (x^(3n)) / (2n + 1)!
+    Умови завершення: |u_n| < ε або |u_n| > g
+    :param x: Значення x
+    :param epsilon: Малий параметр ε
+    :param g: Граничне значення g
+    :return: Сума ряду
+    """
+    n = 0
+    term = x**(3 * n) / math.factorial(2 * n + 1)
+    total_sum = term
 
-    return sum_k, prod_k, changed_matrix
+    while abs(term) >= epsilon and abs(term) <= g:
+        n += 1
+        term = x**(3 * n) / math.factorial(2 * n + 1)
+        total_sum += term
+
+    return total_sum
+
+def task3():
+    """
+    Введення параметрів ряду, обчислення його суми.
+    """
+    try:
+        x = float(input("Введіть x: "))
+        epsilon = float(input("Введіть ε (наприклад, 1e-5): "))
+        g = float(input("Введіть g (наприклад, 1e5): "))
+        result = series_sum(x, epsilon, g)
+        print(f"Сума ряду: {result}")
+    except ValueError:
+        print("Помилка: введіть коректні числа.")
+
